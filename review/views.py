@@ -2,11 +2,11 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http  import HttpResponse,Http404
-from .models import Project,Profile,Rating
+from .models import Project,Profile,Review
 from django.db.models import Avg
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render,redirect,get_object_or_404
-from .forms import UpdateUserForm,UpdateUserProfileForm,NewPostForm,ProjectRatingForm
+from .forms import UpdateUserForm,UpdateUserProfileForm,NewPostForm,ProjectReviewForm
 
 
 from rest_framework.response import Response
@@ -37,13 +37,13 @@ class MerchList2(APIView):
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
-def landing(request):
+def homepage(request):
     
     posts = Project.objects.all().order_by('-date_posted')
     users = User.objects.exclude(id=request.user.id)
     current_user = request.user
     
-    return render(request,"awwards/landing.html",{'posts':posts,'user':current_user,'users':users})
+    return render(request,"awards/homepage.html",{'posts':posts,'user':current_user,'users':users})
 
 
 
@@ -51,7 +51,7 @@ def landing(request):
 def profile(request):
     posts = Project.objects.all().order_by('-date_posted')
     
-    return render(request, 'awwards/profile.html', {'posts':posts})
+    return render(request, 'awards/profile.html', {'posts':posts})
 @login_required(login_url='/accounts/login/')
 def edit(request):
     
@@ -63,13 +63,11 @@ def edit(request):
             user_form.save()
             prof_form.save()
             return redirect('profile')
-            # return HttpResponseRedirect(request.path_info)
     else:
         user_form = UpdateUserForm(instance=request.user)
         prof_form = UpdateUserProfileForm(instance=request.user.profile)
 
     params = {
-        # 'images' : images,   
         'user_form': user_form,
         'prof_form': prof_form,
         
@@ -85,7 +83,7 @@ def new_post(request):
             post = form.save(commit=False)
             post.user = current_user
             post.save()
-        return redirect('landing')
+        return redirect('homepage')
     else:
         form = NewPostForm()
     return render(request, 'newpost.html', {"form": form})
@@ -93,31 +91,31 @@ def new_post(request):
 def single_project(request, c_id):
     current_user = request.user
     current_project = Project.objects.get(id=c_id)
-    ratings = Rating.objects.filter(post_id=c_id)
-    usability = Rating.objects.filter(post_id=c_id).aggregate(Avg('usability_rating'))
-    content = Rating.objects.filter(post_id=c_id).aggregate(Avg('content_rating'))
-    design = Rating.objects.filter(post_id=c_id).aggregate(Avg('design_rating'))
+    reviws = Review.objects.filter(post_id=c_id)
+    usability = Review.objects.filter(post_id=c_id).aggregate(Avg('usability_review'))
+    content = Review.objects.filter(post_id=c_id).aggregate(Avg('content_review'))
+    design = Review.objects.filter(post_id=c_id).aggregate(Avg('design_review'))
 
     return render(request, 'project.html',
-                  {"project": current_project, "user": current_user, 'ratings': ratings, "design": design,
+                  {"project": current_project, "user": current_user, 'reviews': reviews, "design": design,
                    "content": content, "usability": usability})
-def review_rating(request, id):
+def review_review(request, id):
     current_user = request.user
 
     current_project = Project.objects.get(id=id)
 
     if request.method == 'POST':
-        form = ProjectRatingForm(request.POST)
+        form = ProjectReviewForm(request.POST)
         if form.is_valid():
-            rating = form.save(commit=False)
-            rating.project = current_project
-            rating.user = current_user
-            rating.save()
+            review = form.save(commit=False)
+            review.project = current_project
+            review.user = current_user
+            review.save()
             return redirect('project', id)
     else:
-        form = ProjectRatingForm()
+        form = ProjectReviewForm()
 
-    return render(request, 'rating.html', {'form': form, "project": current_project, "user": current_user})
+    return render(request, 'review.html', {'form': form, "project": current_project, "user": current_user})
 
 def search_results(request):
     if 'projects' in request.GET and request.GET['projects']:
