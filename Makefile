@@ -20,3 +20,4 @@ check:
 collectstatic:
 	python manage.py collectstatic
 	#Usage: make collectstatic
+																																																																													
