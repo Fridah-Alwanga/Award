@@ -19,3 +19,11 @@ This is a web application that allows uses to login and rate other users project
 - View projects overall score.
 - A user can view their profile page.
 
+## Technologies used
+<pre><code>
+- Python3.7
+- HTML
+- Bootstrap 4
+- Heroku
+- Postgresql
+- Django 1.11
