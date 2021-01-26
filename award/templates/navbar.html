@@ -1,5 +1,5 @@
 {% load crispy_forms_tags %}
-<nav class="navbar fixed-top navbar-expand-lg navbar- scrolling-navbar" id="nbar"style= background-color:green;  style=color:aliceblue; >
+<nav class="navbar fixed-top navbar-expand-lg navbar- scrolling-navbar" id="nbar"style= background-color:yellow;  style=color:aliceblue; >
     <div class="container">
         <a class="navbar-brand" href="{% url 'index' %}"> <strong class="mr-4 brand"> Home</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -24,20 +24,16 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">{{ user.username|title }} <img class="rounded-circle nav-img"
-                                                                            src="{{ user.profile.profile_picture.url }}"
+                                                                            src=""
                                                                             alt="">
                     </a>
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item text-center" href="{% url 'profile' user.username %}">Profile</a>
                         <hr>
                         <a class="dropdown-item text-center" href="{% url 'edit' user.username  %}"> Edit profile</a>
-                        <!-- <hr>
-                        <a href="{% url 'logout' %}" class="text-secondary text-center dropdown-item">Log Out</a>
-                        <hr> -->
-                        <a class="D-block mx-auto" href="{% url 'logout' %}">Log Out</a>
                         <hr>
-
-                    </div>
+                        <a href="{% url 'logout' %}" class="text-secondary text-center dropdown-item">Log Out</a>                     
+                        </div>
                 </li>
                 {% else %}
                 <a href="{% url 'login' %}" class="login btn btn-sm btn-info"> REGISTER/LOGIN </a>
