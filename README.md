@@ -45,6 +45,9 @@ Install dependancies that will create an environment for the app to run <code>pi
 If you have any question or contributions, please email me at [fridahalwanga6@gmail.com]
 
 
+## License
+
+
 
 
 
