@@ -41,6 +41,7 @@ Install dependancies that will create an environment for the app to run <code>pi
 -python3.7 manage.py migrate
 </code></pre>
 
+## Contact Information
 
 
 
