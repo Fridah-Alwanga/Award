@@ -46,6 +46,7 @@ If you have any question or contributions, please email me at [fridahalwanga6@gm
 
 
 ## License
+MIT © @ Fridah Alwanga Akala
 
 
 
