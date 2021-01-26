@@ -33,6 +33,8 @@ This is a web application that allows uses to login and rate other users project
 ## Install dependancies
 Install dependancies that will create an environment for the app to run <code>pip install -r requirements.txt</code>
 
+## Make and run migrations
+
 
 
 
